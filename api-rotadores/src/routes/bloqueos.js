@@ -1,0 +1,63 @@
+import { Router } from 'express';
+import { pool } from '../db.js';
+import { cambios } from '../eventos.js';
+
+export const bloqueosRouter = Router();
+
+// GET /bloqueos/eventos — SSE, igual que en conteos.js.
+bloqueosRouter.get('/eventos', (req, res) => {
+  res.set({ 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' });
+  res.flushHeaders();
+  res.write('retry: 3000\n\n');
+  const avisar = () => res.write('data: cambio\n\n');
+  cambios.on('bloqueos', avisar);
+  const latido = setInterval(() => res.write(': ping\n\n'), 25000);
+  req.on('close', () => {
+    clearInterval(latido);
+    cambios.off('bloqueos', avisar);
+  });
+});
+
+// GET /bloqueos — bloqueos de edicion vigentes (la app ignora los que
+// llevan mas de 5 minutos, esa regla la aplica el cliente).
+bloqueosRouter.get('/', async (req, res) => {
+  try {
+    const { rows } = await pool.query('select * from bloqueos_edicion');
+    res.json(rows);
+  } catch (err) {
+    console.error('GET /bloqueos', err);
+    res.status(500).json({ error: 'No se pudo consultar bloqueos.' });
+  }
+});
+
+// POST /bloqueos — crea o reemplaza el bloqueo de una posicion (upsert por Orden).
+bloqueosRouter.post('/', async (req, res) => {
+  const { Orden, Usuario, Turno } = req.body || {};
+  if (Orden === undefined) return res.status(400).json({ error: 'Falta Orden.' });
+  try {
+    const { rows } = await pool.query(
+      `insert into bloqueos_edicion ("Orden", "Usuario", "Turno", "CreadoEn")
+       values ($1, $2, $3, now())
+       on conflict ("Orden") do update set "Usuario" = excluded."Usuario", "Turno" = excluded."Turno", "CreadoEn" = excluded."CreadoEn"
+       returning *`,
+      [Orden, Usuario, Turno]
+    );
+    res.status(201).json(rows[0]);
+    cambios.emit('bloqueos');
+  } catch (err) {
+    console.error('POST /bloqueos', err);
+    res.status(500).json({ error: 'No se pudo crear el bloqueo.' });
+  }
+});
+
+// DELETE /bloqueos/:orden — libera la posicion (al guardar o cancelar la edicion).
+bloqueosRouter.delete('/:orden', async (req, res) => {
+  try {
+    await pool.query('delete from bloqueos_edicion where "Orden" = $1', [req.params.orden]);
+    res.status(204).end();
+    cambios.emit('bloqueos');
+  } catch (err) {
+    console.error('DELETE /bloqueos/:orden', err);
+    res.status(500).json({ error: 'No se pudo liberar la posicion.' });
+  }
+});
