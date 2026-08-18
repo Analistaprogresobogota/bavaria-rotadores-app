@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { pool } from '../db.js';
+import { pool, tabla } from '../db.js';
 import { cambios } from '../eventos.js';
 
 export const bloqueosRouter = Router();
+
+const BLOQUEOS = tabla('bloqueos_edicion');
 
 // GET /bloqueos/eventos — SSE, igual que en conteos.js.
 bloqueosRouter.get('/eventos', (req, res) => {
@@ -22,7 +24,7 @@ bloqueosRouter.get('/eventos', (req, res) => {
 // llevan mas de 5 minutos, esa regla la aplica el cliente).
 bloqueosRouter.get('/', async (req, res) => {
   try {
-    const { rows } = await pool.query('select * from bloqueos_edicion');
+    const { rows } = await pool.query(`select * from ${BLOQUEOS}`);
     res.json(rows);
   } catch (err) {
     console.error('GET /bloqueos', err);
@@ -36,7 +38,7 @@ bloqueosRouter.post('/', async (req, res) => {
   if (Orden === undefined) return res.status(400).json({ error: 'Falta Orden.' });
   try {
     const { rows } = await pool.query(
-      `insert into bloqueos_edicion ("Orden", "Usuario", "Turno", "CreadoEn")
+      `insert into ${BLOQUEOS} ("Orden", "Usuario", "Turno", "CreadoEn")
        values ($1, $2, $3, now())
        on conflict ("Orden") do update set "Usuario" = excluded."Usuario", "Turno" = excluded."Turno", "CreadoEn" = excluded."CreadoEn"
        returning *`,
@@ -53,7 +55,7 @@ bloqueosRouter.post('/', async (req, res) => {
 // DELETE /bloqueos/:orden — libera la posicion (al guardar o cancelar la edicion).
 bloqueosRouter.delete('/:orden', async (req, res) => {
   try {
-    await pool.query('delete from bloqueos_edicion where "Orden" = $1', [req.params.orden]);
+    await pool.query(`delete from ${BLOQUEOS} where "Orden" = $1`, [req.params.orden]);
     res.status(204).end();
     cambios.emit('bloqueos');
   } catch (err) {

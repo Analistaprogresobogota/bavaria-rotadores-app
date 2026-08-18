@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { pool } from '../db.js';
+import { pool, tabla } from '../db.js';
 import { cambios } from '../eventos.js';
 
 export const conteosRouter = Router();
+
+const CONTEOS = tabla('conteos');
 
 const COLUMNAS = [
   'Orden', 'Modulo', 'Codigo', 'Estibas', 'Cajas', 'Unidades',
@@ -28,7 +30,7 @@ conteosRouter.get('/eventos', (req, res) => {
 // GET /conteos — estado actual de todas las posiciones.
 conteosRouter.get('/', async (req, res) => {
   try {
-    const { rows } = await pool.query('select * from conteos');
+    const { rows } = await pool.query(`select * from ${CONTEOS}`);
     res.json(rows);
   } catch (err) {
     console.error('GET /conteos', err);
@@ -44,7 +46,7 @@ conteosRouter.post('/', async (req, res) => {
     const valores = columnas.map((c) => req.body[c]);
     const nombres = columnas.map((c) => `"${c}"`).join(', ');
     const marcadores = columnas.map((_, i) => `$${i + 1}`).join(', ');
-    const { rows } = await pool.query(`insert into conteos (${nombres}) values (${marcadores}) returning *`, valores);
+    const { rows } = await pool.query(`insert into ${CONTEOS} (${nombres}) values (${marcadores}) returning *`, valores);
     res.status(201).json(rows[0]);
     cambios.emit('conteos');
   } catch (err) {
@@ -61,7 +63,7 @@ conteosRouter.patch('/:id', async (req, res) => {
     const asignaciones = columnas.map((c, i) => `"${c}" = $${i + 1}`).join(', ');
     const valores = columnas.map((c) => req.body[c]);
     const { rows } = await pool.query(
-      `update conteos set ${asignaciones} where id = $${columnas.length + 1} returning *`,
+      `update ${CONTEOS} set ${asignaciones} where id = $${columnas.length + 1} returning *`,
       [...valores, req.params.id]
     );
     if (rows.length === 0) return res.status(404).json({ error: 'No existe ese conteo.' });

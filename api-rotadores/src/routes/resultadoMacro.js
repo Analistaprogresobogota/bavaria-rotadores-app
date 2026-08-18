@@ -1,7 +1,9 @@
 import { Router } from 'express';
-import { pool } from '../db.js';
+import { pool, tabla } from '../db.js';
 
 export const resultadoMacroRouter = Router();
+
+const RESULTADO_MACRO = tabla('resultado_macro');
 
 const COLUMNAS = [
   'id', 'OrdenMacro', 'Orden', 'Modulo', 'Familia', 'Codigo', 'Descripcion',
@@ -14,7 +16,7 @@ const COLUMNAS = [
 // desde la base de datos sin abrir la app).
 resultadoMacroRouter.get('/', async (req, res) => {
   try {
-    const { rows } = await pool.query('select * from resultado_macro order by "OrdenMacro"');
+    const { rows } = await pool.query(`select * from ${RESULTADO_MACRO} order by "OrdenMacro"`);
     res.json(rows);
   } catch (err) {
     console.error('GET /resultado-macro', err);
@@ -29,12 +31,12 @@ resultadoMacroRouter.put('/', async (req, res) => {
   const cliente = await pool.connect();
   try {
     await cliente.query('begin');
-    await cliente.query('delete from resultado_macro');
+    await cliente.query(`delete from ${RESULTADO_MACRO}`);
     const nombres = COLUMNAS.map((c) => `"${c}"`).join(', ');
     for (const fila of filas) {
       const valores = COLUMNAS.map((c) => fila[c] ?? null);
       const marcadores = COLUMNAS.map((_, i) => `$${i + 1}`).join(', ');
-      await cliente.query(`insert into resultado_macro (${nombres}) values (${marcadores})`, valores);
+      await cliente.query(`insert into ${RESULTADO_MACRO} (${nombres}) values (${marcadores})`, valores);
     }
     await cliente.query('commit');
     res.status(204).end();

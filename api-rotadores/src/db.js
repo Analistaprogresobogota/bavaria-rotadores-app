@@ -21,3 +21,15 @@ export const pool = new Pool({
 pool.on('error', (err) => {
   console.error('Error inesperado en el pool de Postgres:', err);
 });
+
+// Esquema corporativo donde deben vivir las tablas (ver informe tecnico de
+// Tecnologia: la conexion no trae "progreso" en su search_path, asi que
+// cada consulta debe calificarlo explicitamente — nunca confiar en el
+// esquema "public" por defecto). Viene solo de la configuracion del
+// servidor, nunca de una solicitud del cliente.
+export const SCHEMA = process.env.PGSCHEMA || 'progreso';
+
+// Helper para nombrar una tabla calificada con el esquema, ej. tabla('conteos')
+// -> "progreso.conteos". Los nombres de tabla siempre son literales fijos en
+// el codigo (nunca vienen de req), asi que no hay riesgo de inyeccion aqui.
+export const tabla = (nombre) => `${SCHEMA}.${nombre}`;
