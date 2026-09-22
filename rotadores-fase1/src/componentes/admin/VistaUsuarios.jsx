@@ -4,6 +4,7 @@ import { SectionTitle } from '../comunes/SectionTitle';
 import { Cargando } from '../comunes/Cargando';
 import { ErrorAviso } from '../comunes/ErrorAviso';
 import { Empty } from '../comunes/Empty';
+import { ActualizarConteosExcel } from './ActualizarConteosExcel';
 
 const VACIO = { Nombre: '', Usuario: '', Password: '', Rol: 'Rotador' };
 
@@ -141,6 +142,8 @@ export function VistaUsuarios() {
           </table>
         </div>
       )}
+
+      <ActualizarConteosExcel />
     </div>
   );
 }
