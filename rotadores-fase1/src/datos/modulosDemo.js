@@ -2,7 +2,11 @@
 // son datos maestros que casi no cambian. Regenerado desde la hoja "Conteos"
 // del Excel real (no existe una hoja "Modulos" aparte: el orden de fila de
 // "Conteos" ES el "Orden" de cada posicion) via scripts/actualizar-desde-excel.mjs.
-// Ultima actualizacion: 2026-08-18.
+// Ultima actualizacion: 2026-08-18. Corregido 2026-09-22: se consolidaron 41
+// modulos que estaban fragmentados en mas de un Orden (mismo modulo fisico
+// repetido) — ahora cada posicion fisica tiene un solo Orden; los productos
+// adicionales de una posicion mixta viven como varios registros de "conteos"
+// bajo ese mismo Orden, no como posiciones separadas.
 export const MODULOS_DEMO = [
   {
     "Modulo": "M_A1_DER_",
@@ -691,13 +695,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "BH_BAHIA 8_IZQ_",
-    "Bodega": "Ret Pack",
-    "Fase": "A",
-    "Orden": 99,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "BH_BAHIA 9_DER",
     "Bodega": "Ret Pack",
     "Fase": "A",
@@ -926,13 +923,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Ret Pack",
     "Fase": "A",
     "Orden": 132,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_COLUMNA C_2",
-    "Bodega": "Ret Pack",
-    "Fase": "A",
-    "Orden": 133,
     "Activo": "Si"
   },
   {
@@ -1213,13 +1203,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Ret Pack",
     "Fase": "A",
     "Orden": 173,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_D1_DER",
-    "Bodega": "Ret Pack",
-    "Fase": "A",
-    "Orden": 174,
     "Activo": "Si"
   },
   {
@@ -1657,13 +1640,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "BH_BAHIA 20 DER",
-    "Bodega": "Ret Pack",
-    "Fase": "A",
-    "Orden": 237,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "BH_BAHIA 20 IZQ",
     "Bodega": "Ret Pack",
     "Fase": "A",
@@ -1944,13 +1920,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "E_F4_DER",
-    "Bodega": "One Way",
-    "Fase": "A",
-    "Orden": 278,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "E_F4_IZQ_",
     "Bodega": "One Way",
     "Fase": "A",
@@ -2095,13 +2064,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "A",
     "Orden": 299,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "E_F15__",
-    "Bodega": "One Way",
-    "Fase": "A",
-    "Orden": 300,
     "Activo": "Si"
   },
   {
@@ -2665,13 +2627,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_H12_IZQ_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 381,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_H13_DER_",
     "Bodega": "One Way",
     "Fase": "B",
@@ -2742,27 +2697,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "E_ENTRE TUNELES",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 392,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "E_ENTRE TUNELES",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 393,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "E_ENTRE TUNELES",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 394,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_I5_IZQ",
     "Bodega": "One Way",
     "Fase": "B",
@@ -2788,13 +2722,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 398,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_I7_DER",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 399,
     "Activo": "Si"
   },
   {
@@ -3120,13 +3047,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_J12_IZQ",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 446,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_J13_DER",
     "Bodega": "One Way",
     "Fase": "B",
@@ -3173,272 +3093,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 453,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 454,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 455,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 456,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 457,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 458,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 459,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 460,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 461,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 462,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 463,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 464,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 465,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 466,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 467,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 468,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 469,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 470,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 471,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 472,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 473,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 474,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 475,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 476,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 477,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 478,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 479,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 480,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 481,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 482,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 483,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 484,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 485,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 486,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 487,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 488,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 489,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 490,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_KPASILLO__",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 491,
     "Activo": "Si"
   },
   {
@@ -3652,13 +3306,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_L_PASILLO-1",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 522,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_L_PASILLO-2",
     "Bodega": "One Way",
     "Fase": "B",
@@ -3684,13 +3331,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 526,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_L1_DER_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 527,
     "Activo": "Si"
   },
   {
@@ -3838,13 +3478,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 548,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_L12_IZQ_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 549,
     "Activo": "Si"
   },
   {
@@ -4191,13 +3824,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_O1_LAT",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 599,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_O1",
     "Bodega": "One Way",
     "Fase": "B",
@@ -4223,13 +3849,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 603,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O4",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 604,
     "Activo": "Si"
   },
   {
@@ -4268,34 +3887,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_O9_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 610,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O9_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 611,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O9_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 612,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O9_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 613,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_O10",
     "Bodega": "One Way",
     "Fase": "B",
@@ -4303,45 +3894,10 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_O10",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 615,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O10",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 616,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O10",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 617,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O10",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 618,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_O11",
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 619,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_O11",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 620,
     "Activo": "Si"
   },
   {
@@ -4758,13 +4314,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_N7_DER_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 680,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_N7_IZQ_",
     "Bodega": "One Way",
     "Fase": "B",
@@ -4800,13 +4349,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_N9_IZQ_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 686,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_N10_DER_",
     "Bodega": "One Way",
     "Fase": "B",
@@ -4835,13 +4377,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_N11_IZQ_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 691,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_N12_DER_",
     "Bodega": "One Way",
     "Fase": "B",
@@ -4867,13 +4402,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 695,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_N13_IZQ_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 696,
     "Activo": "Si"
   },
   {
@@ -4947,31 +4475,10 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_N18_IZQ",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 707,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_N20_",
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 708,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_N20_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 709,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_N20_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 710,
     "Activo": "Si"
   },
   {
@@ -5129,20 +4636,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "M_M12_LAT_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 733,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_M12_LAT_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 734,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "M_M12_DER_",
     "Bodega": "One Way",
     "Fase": "B",
@@ -5154,13 +4647,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 736,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_M13_IZQ_",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 737,
     "Activo": "Si"
   },
   {
@@ -5196,13 +4682,6 @@ export const MODULOS_DEMO = [
     "Bodega": "One Way",
     "Fase": "B",
     "Orden": 742,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "M_M15_LAT",
-    "Bodega": "One Way",
-    "Fase": "B",
-    "Orden": 743,
     "Activo": "Si"
   },
   {
@@ -5598,24 +5077,10 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "CPC23",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 800,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "CPC24",
     "Bodega": "Carpas",
     "Fase": "B",
     "Orden": 801,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPC24",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 802,
     "Activo": "Si"
   },
   {
@@ -5990,13 +5455,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "CPE12",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 856,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "CPE13",
     "Bodega": "Carpas",
     "Fase": "B",
@@ -6008,13 +5466,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Carpas",
     "Fase": "B",
     "Orden": 858,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPE14",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 859,
     "Activo": "Si"
   },
   {
@@ -6032,24 +5483,10 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "CPE16",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 862,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "PCPE",
     "Bodega": "Carpas",
     "Fase": "B",
     "Orden": 863,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "PCPE",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 864,
     "Activo": "Si"
   },
   {
@@ -6071,13 +5508,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Carpas",
     "Fase": "B",
     "Orden": 867,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPE19",
-    "Bodega": "Carpas",
-    "Fase": "B",
-    "Orden": 868,
     "Activo": "Si"
   },
   {
@@ -6137,31 +5567,10 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "CPE27",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 877,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPE27",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 878,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "CPE28",
     "Bodega": "Carpas",
     "Fase": "C",
     "Orden": 879,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPE28",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 880,
     "Activo": "Si"
   },
   {
@@ -6190,13 +5599,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Carpas",
     "Fase": "C",
     "Orden": 884,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPE32",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 885,
     "Activo": "Si"
   },
   {
@@ -6232,13 +5634,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Carpas",
     "Fase": "C",
     "Orden": 890,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPF5",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 891,
     "Activo": "Si"
   },
   {
@@ -6361,20 +5756,6 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   },
   {
-    "Modulo": "CPF23",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 909,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPF23",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 910,
-    "Activo": "Si"
-  },
-  {
     "Modulo": "CPF25",
     "Bodega": "Carpas",
     "Fase": "C",
@@ -6435,20 +5816,6 @@ export const MODULOS_DEMO = [
     "Bodega": "Carpas",
     "Fase": "C",
     "Orden": 919,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPG",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 920,
-    "Activo": "Si"
-  },
-  {
-    "Modulo": "CPG",
-    "Bodega": "Carpas",
-    "Fase": "C",
-    "Orden": 921,
     "Activo": "Si"
   },
   {
@@ -6536,3 +5903,4 @@ export const MODULOS_DEMO = [
     "Activo": "Si"
   }
 ];
+
