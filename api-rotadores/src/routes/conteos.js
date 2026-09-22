@@ -74,3 +74,19 @@ conteosRouter.patch('/:id', async (req, res) => {
     res.status(500).json({ error: 'No se pudo actualizar el conteo.' });
   }
 });
+
+// DELETE /conteos/:id — borra un conteo puntual. Se usa cuando en una
+// posicion mixta (2+ productos guardados ahi) se quita uno de los productos:
+// sin esta ruta, el registro viejo quedaba huerfano en la base para siempre
+// (nunca se actualizaba ni se borraba), inflando el conteo real de filas.
+conteosRouter.delete('/:id', async (req, res) => {
+  try {
+    const { rowCount } = await pool.query(`delete from ${CONTEOS} where id = $1`, [req.params.id]);
+    if (rowCount === 0) return res.status(404).json({ error: 'No existe ese conteo.' });
+    res.status(204).end();
+    cambios.emit('conteos');
+  } catch (err) {
+    console.error('DELETE /conteos/:id', err);
+    res.status(500).json({ error: 'No se pudo borrar el conteo.' });
+  }
+});

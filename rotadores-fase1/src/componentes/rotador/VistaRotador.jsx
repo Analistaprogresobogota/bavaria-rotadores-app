@@ -37,6 +37,7 @@ export function VistaRotador() {
     obtenerConteos,
     obtenerHistorial,
     guardarConteo,
+    eliminarConteo,
     crearHistorial,
     obtenerBloqueos,
     bloquearPosicion,
@@ -215,6 +216,19 @@ export function VistaRotador() {
     if (!puedeGuardar) return;
     setGuardando(true);
     try {
+      // Productos que existian al abrir esta edicion (posicion mixta) y ya
+      // no estan en `lineas`: el Rotador le dio "Quitar este producto" a
+      // alguno que ya estaba guardado de antes. Sin este borrado, el
+      // registro viejo quedaba huerfano en la base para siempre — nunca se
+      // actualizaba ni se borraba, solo se acumulaba.
+      const idsOriginales = estadosActualesDe(posicionEditando.Orden, conteos).map((c) => c.id);
+      const idsQueQuedan = new Set(lineas.filter((l) => l.id).map((l) => l.id));
+      const idsABorrar = idsOriginales.filter((id) => !idsQueQuedan.has(id));
+      for (const id of idsABorrar) {
+        await eliminarConteo(id);
+        setConteos((lista) => lista.filter((c) => c.id !== id));
+      }
+
       for (const l of lineas) {
         const datos = {
           Modulo: posicionEditando.Modulo,

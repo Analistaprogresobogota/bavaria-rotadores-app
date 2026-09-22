@@ -48,6 +48,13 @@ export function crearGraphProveedor(auth) {
       return { id: respuesta.id, ...datos };
     },
 
+    // Borra un item puntual (se usa al quitar un producto de una posicion
+    // mixta, para que el registro viejo no quede huerfano en la lista).
+    async eliminarConteo(id) {
+      const token = await auth.obtenerToken();
+      await graphFetch(`${rutaLista(CONFIG.listConteosId)}/${id}`, { token, method: 'DELETE' });
+    },
+
     // Historial = log append-only de cada captura (nunca se edita ni se borra),
     // para trazabilidad completa dia a dia por posicion.
     async obtenerHistorial() {

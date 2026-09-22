@@ -39,6 +39,7 @@ async function ejecutarOperacionRemota(op) {
   if (tabla === 'conteos') {
     if (metodo === 'POST') return [await solicitud('/conteos', { method: 'POST', body: JSON.stringify(payload) })];
     const id = filtro?.match(/id=eq\.(.+)/)?.[1];
+    if (metodo === 'DELETE') return [await solicitud(`/conteos/${id}`, { method: 'DELETE' })];
     return [await solicitud(`/conteos/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })];
   }
   if (tabla === 'historial') {
@@ -60,6 +61,7 @@ function actualizarCacheLocal(tabla, fila, idExistente) {
 export function crearApiProveedor() {
   activarSincronizacionAutomatica((op) =>
     ejecutarOperacionRemota(op).then(([fila]) => {
+      if (op.metodo === 'DELETE') return; // ya se quito del cache al encolar
       if (op.idLocal) actualizarCacheLocal(op.tabla, fila, op.idLocal);
     })
   );
@@ -101,6 +103,20 @@ export function crearApiProveedor() {
         actualizarCacheLocal('conteos', filaOptimista, idExistente);
         return filaOptimista;
       }
+    },
+
+    // Borra un conteo puntual (se usa al quitar un producto de una posicion
+    // mixta, para que el registro viejo no quede huerfano en la base).
+    async eliminarConteo(id) {
+      try {
+        await solicitud(`/conteos/${id}`, { method: 'DELETE' });
+      } catch {
+        encolar({ metodo: 'DELETE', tabla: 'conteos', filtro: `id=eq.${id}`, idLocal: id });
+      }
+      escribirCache(
+        'conteos',
+        leerCache('conteos').filter((c) => c.id !== id)
+      );
     },
 
     async crearHistorial(datos) {

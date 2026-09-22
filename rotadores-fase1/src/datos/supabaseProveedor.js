@@ -111,6 +111,21 @@ export function crearSupabaseProveedor() {
       }
     },
 
+    // Borra un conteo puntual (se usa al quitar un producto de una posicion
+    // mixta, para que el registro viejo no quede huerfano en la base).
+    async eliminarConteo(id) {
+      const op = { metodo: 'DELETE', tabla: 'conteos', filtro: `id=eq.${id}` };
+      try {
+        await ejecutarOperacionRemota(op);
+      } catch {
+        encolar(op);
+      }
+      escribirCache(
+        'conteos',
+        leerCache('conteos').filter((c) => c.id !== id)
+      );
+    },
+
     async crearHistorial(datos) {
       const op = { metodo: 'POST', tabla: 'historial', payload: datos };
       try {

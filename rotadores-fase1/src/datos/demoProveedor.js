@@ -53,6 +53,13 @@ export function crearDemoProveedor() {
       return nuevo;
     },
 
+    // Borra un conteo puntual (se usa al quitar un producto de una posicion
+    // mixta, para que el registro viejo no quede huerfano).
+    async eliminarConteo(id) {
+      await retrasoSimulado();
+      conteos = conteos.filter((c) => c.id !== id);
+    },
+
     async crearHistorial(datos) {
       await retrasoSimulado();
       const nuevo = { id: `hist-${Date.now()}`, ...datos };

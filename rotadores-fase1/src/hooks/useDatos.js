@@ -50,6 +50,7 @@ export function useDatos() {
       (datos, idExistente) => ejecutar(() => proveedor.guardarConteo(datos, idExistente)),
       [ejecutar, proveedor]
     ),
+    eliminarConteo: useCallback((id) => ejecutar(() => proveedor.eliminarConteo(id)), [ejecutar, proveedor]),
     obtenerHistorial: useCallback(() => ejecutar(() => proveedor.obtenerHistorial()), [ejecutar, proveedor]),
     crearHistorial: useCallback((datos) => ejecutar(() => proveedor.crearHistorial(datos)), [ejecutar, proveedor]),
     obtenerRotadores: useCallback(() => ejecutar(() => proveedor.obtenerRotadores()), [ejecutar, proveedor]),
